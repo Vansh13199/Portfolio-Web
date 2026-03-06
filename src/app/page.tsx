@@ -54,13 +54,7 @@ export default function Home() {
                         (function() {
                             try {
                                 var hasBooted = sessionStorage.getItem("vansh_os_booted");
-                                var isReload = false;
-                                var nav = performance.getEntriesByType("navigation")[0];
-                                if (nav && nav.type === "reload" && nav.transferSize > 0) {
-                                    isReload = true;
-                                    sessionStorage.removeItem("vansh_os_booted");
-                                }
-                                if (hasBooted && !isReload) {
+                                if (hasBooted) {
                                     document.documentElement.classList.add("skip-boot");
                                 } else {
                                     document.documentElement.classList.remove("skip-boot");
