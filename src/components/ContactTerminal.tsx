@@ -4,6 +4,7 @@ import { useState, useRef, FormEvent } from "react";
 import { motion } from "framer-motion";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { fadeInUp } from "@/animations/scrollAnimations";
+import { validateName, validateEmail, validateMessage } from "@/lib/validation";
 
 interface CommandLine {
     type: "input" | "output" | "error" | "success";
@@ -35,8 +36,20 @@ export default function ContactTerminal() {
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
 
-        if (!name.trim() || !email.trim() || !message.trim()) {
-            addLine({ type: "error", text: "Error: All fields are required." });
+        // Client-side validation
+        const nameError = validateName(name);
+        if (nameError) {
+            addLine({ type: "error", text: `Error: ${nameError}` });
+            return;
+        }
+        const emailError = validateEmail(email);
+        if (emailError) {
+            addLine({ type: "error", text: `Error: ${emailError}` });
+            return;
+        }
+        const messageError = validateMessage(message);
+        if (messageError) {
+            addLine({ type: "error", text: `Error: ${messageError}` });
             return;
         }
 
@@ -44,18 +57,34 @@ export default function ContactTerminal() {
         addLine({ type: "output", text: "Establishing connection..." });
 
         setIsSubmitting(true);
-        await new Promise((r) => setTimeout(r, 1500));
 
-        addLine({ type: "success", text: "✓ Message queued for delivery." });
-        addLine({
-            type: "output",
-            text: "Thank you! I'll get back to you soon.",
-        });
+        try {
+            const res = await fetch("/api/contact", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    name: name.trim(),
+                    email: email.trim(),
+                    message: message.trim(),
+                }),
+            });
 
-        setIsSubmitting(false);
-        setName("");
-        setEmail("");
-        setMessage("");
+            const data = await res.json();
+
+            if (data.success) {
+                addLine({ type: "success", text: "✓ Message delivered successfully." });
+                addLine({ type: "output", text: "Thank you! I'll get back to you soon." });
+                setName("");
+                setEmail("");
+                setMessage("");
+            } else {
+                addLine({ type: "error", text: `Error: ${data.error || "Failed to send message."}` });
+            }
+        } catch {
+            addLine({ type: "error", text: "Error: Network error. Please try again." });
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     return (
