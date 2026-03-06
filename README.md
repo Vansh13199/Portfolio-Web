@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="src/app/icon.tsx" alt="Logo" width="80" height="80" />
+  <img src="icon.png" alt="Logo" width="80" height="80" />
   
   <h1 align="center">Vansh.dev Portfolio</h1>
 
