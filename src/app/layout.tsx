@@ -43,6 +43,8 @@ export const metadata: Metadata = {
     },
 };
 
+import MobileBlocker from "@/components/MobileBlocker";
+
 export default function RootLayout({
     children,
 }: Readonly<{
@@ -53,6 +55,7 @@ export default function RootLayout({
             <body
                 className={`${inter.variable} ${jetbrainsMono.variable} font-sans antialiased`}
             >
+                <MobileBlocker />
                 {children}
             </body>
         </html>
