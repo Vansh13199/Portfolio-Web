@@ -15,7 +15,7 @@ const navLinks = [
     { href: "#contact", label: "Contact" },
 ];
 
-export default function Navbar() {
+export default function Navbar({ onReboot }: { onReboot?: () => void }) {
     const [scrolled, setScrolled] = useState(false);
     const [mobileOpen, setMobileOpen] = useState(false);
     const [activeSection, setActiveSection] = useState("home");
@@ -84,6 +84,31 @@ export default function Navbar() {
                                 )}
                             </a>
                         ))}
+
+                        {/* Reboot System button */}
+                        {onReboot && (
+                            <motion.button
+                                onClick={onReboot}
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
+                                className="ml-4 group relative px-3 py-1.5 rounded-lg border border-neon-cyan/30 bg-neon-cyan/10 hover:bg-neon-cyan/20 hover:border-neon-cyan/60 flex items-center gap-2 transition-all duration-300 cursor-pointer box-glow-cyan"
+                                title="Reboot System"
+                                aria-label="Reboot System"
+                            >
+                                <svg
+                                    className="w-3.5 h-3.5 text-neon-cyan group-hover:animate-pulse"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    strokeWidth="2"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 2v4m0 0a8 8 0 110 16 8 8 0 010-16z" />
+                                </svg>
+                                <span className="text-[10px] sm:text-xs font-bold text-neon-cyan tracking-widest uppercase">
+                                    Reboot
+                                </span>
+                            </motion.button>
+                        )}
                     </div>
 
                     {/* Mobile Toggle */}
@@ -131,6 +156,33 @@ export default function Navbar() {
                                     {link.label}
                                 </motion.a>
                             ))}
+
+                            {/* Mobile Reboot Button */}
+                            {onReboot && (
+                                <motion.button
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: navLinks.length * 0.05 }}
+                                    onClick={() => {
+                                        setMobileOpen(false);
+                                        onReboot();
+                                    }}
+                                    className="mt-4 px-6 py-3 rounded-xl border border-neon-cyan/30 bg-neon-cyan/10 flex items-center gap-3 box-glow-cyan"
+                                >
+                                    <svg
+                                        className="w-5 h-5 text-neon-cyan animate-pulse"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        strokeWidth="2"
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 2v4m0 0a8 8 0 110 16 8 8 0 010-16z" />
+                                    </svg>
+                                    <span className="text-sm font-bold text-neon-cyan tracking-widest uppercase">
+                                        Reboot System
+                                    </span>
+                                </motion.button>
+                            )}
                         </div>
                     </motion.div>
                 )}

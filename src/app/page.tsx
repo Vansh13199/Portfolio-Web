@@ -1,9 +1,11 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import Footer from "@/components/Footer";
+import BootSequence from "@/components/BootSequence";
 
 // Lazy load heavier sections for performance
 const CloudVisualization = dynamic(
@@ -31,9 +33,45 @@ const ContactTerminal = dynamic(
 );
 
 export default function Home() {
+    const [booting, setBooting] = useState(true);
+
+    const handleBootComplete = () => {
+        sessionStorage.setItem("vansh_os_booted", "true");
+        setBooting(false);
+    };
+
+    const handleReboot = () => {
+        document.documentElement.classList.remove("skip-boot");
+        window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior });
+        setBooting(true);
+    };
+
     return (
         <main className="relative noise-overlay">
-            <Navbar />
+            <script
+                dangerouslySetInnerHTML={{
+                    __html: `
+                        (function() {
+                            try {
+                                var hasBooted = sessionStorage.getItem("vansh_os_booted");
+                                var isReload = false;
+                                var nav = performance.getEntriesByType("navigation")[0];
+                                if (nav && nav.type === "reload" && nav.transferSize > 0) {
+                                    isReload = true;
+                                    sessionStorage.removeItem("vansh_os_booted");
+                                }
+                                if (hasBooted && !isReload) {
+                                    document.documentElement.classList.add("skip-boot");
+                                } else {
+                                    document.documentElement.classList.remove("skip-boot");
+                                }
+                            } catch(e) {}
+                        })();
+                    `,
+                }}
+            />
+            {booting && <BootSequence onComplete={handleBootComplete} />}
+            <Navbar onReboot={handleReboot} />
             <HeroSection />
             <CloudVisualization />
             <AboutSection />

@@ -1,10 +1,11 @@
 "use client";
 
-import { useState, useRef, FormEvent } from "react";
-import { motion } from "framer-motion";
+import { useState, useRef, useCallback, FormEvent } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { fadeInUp } from "@/animations/scrollAnimations";
 import { validateName, validateEmail, validateMessage } from "@/lib/validation";
+import SubmissionPipeline from "./SubmissionPipeline";
 
 interface CommandLine {
     type: "input" | "output" | "error" | "success";
@@ -21,9 +22,11 @@ export default function ContactTerminal() {
     const [email, setEmail] = useState("");
     const [message, setMessage] = useState("");
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [showPipeline, setShowPipeline] = useState(false);
+    const [formData, setFormData] = useState<{ name: string; email: string; message: string } | null>(null);
     const terminalRef = useRef<HTMLDivElement>(null);
 
-    const addLine = (line: CommandLine) => {
+    const addLine = useCallback((line: CommandLine) => {
         setHistory((prev) => [...prev, line]);
         setTimeout(() => {
             terminalRef.current?.scrollTo({
@@ -31,7 +34,31 @@ export default function ContactTerminal() {
                 behavior: "smooth",
             });
         }, 50);
-    };
+    }, []);
+
+    const handlePipelineLog = useCallback(
+        (type: "output" | "success" | "error", text: string) => {
+            addLine({ type, text });
+        },
+        [addLine]
+    );
+
+    const handlePipelineComplete = useCallback(
+        (success: boolean) => {
+            if (success) {
+                setName("");
+                setEmail("");
+                setMessage("");
+            }
+            // Keep pipeline visible for a moment, then hide
+            setTimeout(() => {
+                setShowPipeline(false);
+                setFormData(null);
+                setIsSubmitting(false);
+            }, 2000);
+        },
+        []
+    );
 
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
@@ -54,37 +81,15 @@ export default function ContactTerminal() {
         }
 
         addLine({ type: "input", text: `send --name "${name}" --email "${email}"` });
-        addLine({ type: "output", text: "Establishing connection..." });
+        addLine({ type: "output", text: "Initializing deployment pipeline..." });
 
         setIsSubmitting(true);
-
-        try {
-            const res = await fetch("/api/contact", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    name: name.trim(),
-                    email: email.trim(),
-                    message: message.trim(),
-                }),
-            });
-
-            const data = await res.json();
-
-            if (data.success) {
-                addLine({ type: "success", text: "✓ Message delivered successfully." });
-                addLine({ type: "output", text: "Thank you! I'll get back to you soon." });
-                setName("");
-                setEmail("");
-                setMessage("");
-            } else {
-                addLine({ type: "error", text: `Error: ${data.error || "Failed to send message."}` });
-            }
-        } catch {
-            addLine({ type: "error", text: "Error: Network error. Please try again." });
-        } finally {
-            setIsSubmitting(false);
-        }
+        setFormData({
+            name: name.trim(),
+            email: email.trim(),
+            message: message.trim(),
+        });
+        setShowPipeline(true);
     };
 
     return (
@@ -130,7 +135,7 @@ export default function ContactTerminal() {
                     {/* Terminal output */}
                     <div
                         ref={terminalRef}
-                        className="p-4 h-40 overflow-y-auto terminal-text text-xs space-y-1"
+                        className="p-4 h-48 overflow-y-auto terminal-text text-xs space-y-1"
                     >
                         {history.map((line, i) => (
                             <motion.div
@@ -153,15 +158,17 @@ export default function ContactTerminal() {
                                 {line.text}
                             </motion.div>
                         ))}
-                        {isSubmitting && (
-                            <motion.div
-                                animate={{ opacity: [0.3, 1, 0.3] }}
-                                transition={{ duration: 1, repeat: Infinity }}
-                                className="text-neon-cyan"
-                            >
-                                Processing...
-                            </motion.div>
-                        )}
+
+                        {/* Pipeline animation */}
+                        <AnimatePresence>
+                            {showPipeline && formData && (
+                                <SubmissionPipeline
+                                    formData={formData}
+                                    onComplete={handlePipelineComplete}
+                                    onLog={handlePipelineLog}
+                                />
+                            )}
+                        </AnimatePresence>
                     </div>
 
                     {/* Form */}
@@ -212,7 +219,7 @@ export default function ContactTerminal() {
                             disabled={isSubmitting}
                             className="w-full py-2.5 rounded-lg bg-gradient-to-r from-neon-cyan/20 to-neon-purple/20 border border-neon-cyan/20 text-xs font-semibold tracking-wider uppercase text-neon-cyan hover:from-neon-cyan/30 hover:to-neon-purple/30 transition-all disabled:opacity-50 terminal-text"
                         >
-                            {isSubmitting ? "Sending..." : "❯ execute send_message"}
+                            {isSubmitting ? "⚡ Pipeline Running..." : "❯ execute send_message"}
                         </button>
                     </form>
                 </motion.div>
