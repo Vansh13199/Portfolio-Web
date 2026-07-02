@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- ============================================================= -->
+  <!--  CUSTOMIZE: Page title, description & social preview          -->
+  <!-- ============================================================= -->
+  <title>Vansh — Senior DevOps &amp; Platform Engineer</title>
+  <meta name="description" content="Alex Rivera — Senior DevOps & Platform Engineer. Designing resilient, cost-efficient cloud infrastructure on AWS, GCP & Azure." />
+  <meta name="author" content="Alex Rivera" />
+  <meta name="theme-color" content="#0d0d0f" />
+
+  <!-- Open Graph (edit for link previews) -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Alex Rivera — Senior DevOps & Platform Engineer" />
+  <meta property="og:description" content="Designing resilient, cost-efficient cloud infrastructure on AWS, GCP & Azure." />
+
+  <!-- Set the theme class before paint to avoid a flash of the wrong theme -->
+  <script>
+    (function () {
+      document.documentElement.classList.remove('no-js');
+      document.documentElement.classList.add('js');
+      try {
+        var t = localStorage.getItem('theme');
+        if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+      } catch (e) {}
+    })();
+  </script>
+
+  <!-- Fonts: Space Grotesk (display) · Inter (body) · JetBrains Mono (technical accents) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>△</text></svg>" />
+</head>
+
+<body>
+  <!-- Skip link for keyboard users -->
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <!-- ============================================================= -->
+  <!--  Custom cursor (desktop only; hidden on touch)                -->
+  <!-- ============================================================= -->
+  <div class="cursor" aria-hidden="true">
+    <div class="cursor__dot"></div>
+    <div class="cursor__ring"></div>
+  </div>
+
+  <!-- ============================================================= -->
+  <!--  Preloader                                                    -->
+  <!-- ============================================================= -->
+  <div class="preloader" id="preloader" aria-hidden="true">
+    <div class="preloader__inner">
+      <div class="preloader__label">
+        <span>Loading experience</span>
+        <span class="preloader__count" id="preloaderCount">0</span>
+      </div>
+      <div class="preloader__bar"><span id="preloaderBar"></span></div>
+    </div>
+  </div>
+
+  <!-- Scroll progress bar -->
+  <div class="scroll-progress" aria-hidden="true"><span id="scrollProgress"></span></div>
+
+  <!-- ============================================================= -->
+  <!--  Navigation                                                   -->
+  <!-- ============================================================= -->
+  <header class="nav" id="nav">
+    <div class="nav__inner">
+      <!-- CUSTOMIZE: monogram / logo -->
+      <a href="#hero" class="nav__logo" data-magnetic data-cursor="Home" aria-label="Home">
+        <span class="nav__logo-mark">△</span>
+        <span class="nav__logo-text">Alex&nbsp;Rivera</span>
+      </a>
+
+      <nav class="nav__links" aria-label="Primary">
+        <a href="#about"   class="nav__link" data-magnetic><span class="nav__link-idx">01</span> About</a>
+        <a href="#stack"   class="nav__link" data-magnetic><span class="nav__link-idx">02</span> Stack</a>
+        <a href="#work"    class="nav__link" data-magnetic><span class="nav__link-idx">03</span> Work</a>
+        <a href="#contact" class="nav__link" data-magnetic><span class="nav__link-idx">04</span> Contact</a>
+      </nav>
+
+      <div class="nav__actions">
+        <!-- Availability status -->
+        <span class="nav__status" title="Open to opportunities">
+          <span class="nav__status-dot"></span> Available
+        </span>
+
+        <!-- Theme toggle -->
+        <button class="theme-toggle" id="themeToggle" data-magnetic aria-label="Toggle color theme" data-cursor="Theme">
+          <svg class="theme-toggle__sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2.5M12 19.5V22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M2 12h2.5M19.5 12H22M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></svg>
+          <svg class="theme-toggle__moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.3 6.3 0 0 0 10.5 10.5Z"/></svg>
+        </button>
+
+        <!-- Mobile menu button -->
+        <button class="nav__burger" id="navBurger" aria-label="Open menu" aria-expanded="false">
+          <span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Fullscreen mobile menu -->
+  <div class="menu" id="mobileMenu" aria-hidden="true">
+    <nav class="menu__links">
+      <a href="#about"   class="menu__link"><span>01</span> About</a>
+      <a href="#stack"   class="menu__link"><span>02</span> Stack</a>
+      <a href="#work"    class="menu__link"><span>03</span> Work</a>
+      <a href="#contact" class="menu__link"><span>04</span> Contact</a>
+    </nav>
+    <div class="menu__foot">
+      <!-- CUSTOMIZE: email / socials -->
+      <a href="mailto:hello@alexrivera.dev">hello@alexrivera.dev</a>
+      <span>Remote · UTC±0</span>
+    </div>
+  </div>
+
+  <!-- ============================================================= -->
+  <!--  Smooth-scroll wrapper (transformed on desktop)               -->
+  <!-- ============================================================= -->
+  <main id="main">
+  <div id="smooth-wrapper">
+  <div id="smooth-content">
+
+    <!-- =========================== HERO =========================== -->
+    <section class="hero" id="hero">
+      <!-- Animated background layers -->
+      <div class="hero__bg" aria-hidden="true">
+        <div class="hero__grid"></div>
+        <div class="orb orb--1"></div>
+        <div class="orb orb--2"></div>
+        <div class="orb orb--3"></div>
+        <div class="hero__noise"></div>
+      </div>
+
+      <div class="hero__content container">
+        <p class="hero__eyebrow" data-reveal>
+          <span class="mono">// Senior DevOps &amp; Platform Engineer</span>
+        </p>
+
+        <!-- CUSTOMIZE: headline statement -->
+        <h1 class="hero__title">
+          <span class="line" data-split="words">Infrastructure</span>
+          <span class="line" data-split="words">that ships fast</span>
+          <span class="line line--accent" data-split="lines">&amp; never sleeps.</span>
+        </h1>
+
+        <div class="hero__meta">
+          <p class="hero__lead" data-reveal data-reveal-delay="0.15">
+            I'm <strong>Alex Rivera</strong> — I design, automate and scale resilient cloud
+            platforms across <span class="pill">AWS</span> <span class="pill">GCP</span>
+            <span class="pill">Azure</span>, turning fragile deploys into
+            self-healing systems.
+          </p>
+
+          <div class="hero__cta" data-reveal data-reveal-delay="0.3">
+            <a href="#work" class="btn btn--primary" data-magnetic data-cursor="Explore">
+              <span>View selected work</span>
+              <svg viewBox="0 0 24 24" class="btn__arrow"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+            <a href="#contact" class="btn btn--ghost" data-magnetic>
+              <span>Get in touch</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Rotating role ticker -->
+        <div class="hero__ticker" data-reveal data-reveal-delay="0.45" aria-hidden="true">
+          <span class="mono hero__ticker-static">Currently:</span>
+          <span class="hero__ticker-rotate">
+            <span>shipping Kubernetes at scale</span>
+            <span>writing Terraform modules</span>
+            <span>slashing cloud spend</span>
+            <span>building CI/CD pipelines</span>
+            <span>chasing five nines</span>
+          </span>
+        </div>
+      </div>
+
+      <a href="#about" class="hero__scroll" data-cursor="Scroll" aria-label="Scroll to about">
+        <span class="mono">Scroll</span>
+        <span class="hero__scroll-line"><span></span></span>
+      </a>
+    </section>
+
+    <!-- Marquee strip -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee__track">
+        <!-- CUSTOMIZE: rotating keywords -->
+        <span>AWS</span><i>△</i><span>Kubernetes</span><i>△</i><span>Terraform</span><i>△</i>
+        <span>Docker</span><i>△</i><span>GCP</span><i>△</i><span>Azure</span><i>△</i>
+        <span>CI/CD</span><i>△</i><span>Observability</span><i>△</i><span>GitOps</span><i>△</i>
+        <span>SRE</span><i>△</i><span>FinOps</span><i>△</i>
+        <span aria-hidden="true">AWS</span><i>△</i><span>Kubernetes</span><i>△</i><span>Terraform</span><i>△</i>
+        <span>Docker</span><i>△</i><span>GCP</span><i>△</i><span>Azure</span><i>△</i>
+        <span>CI/CD</span><i>△</i><span>Observability</span><i>△</i><span>GitOps</span><i>△</i>
+        <span>SRE</span><i>△</i><span>FinOps</span><i>△</i>
+      </div>
+    </div>
+
+    <!-- =========================== ABOUT =========================== -->
+    <section class="section about" id="about">
+      <div class="container">
+        <div class="section__head" data-reveal>
+          <span class="section__idx mono">01 / About</span>
+          <span class="section__rule"></span>
+        </div>
+
+        <div class="about__grid">
+          <div class="about__body">
+            <!-- CUSTOMIZE: bio -->
+            <p class="about__lead" data-split="lines" data-reveal>
+              For the last decade I've lived at the intersection of software and operations —
+              turning manual, fragile releases into automated, observable, self-healing platforms.
+            </p>
+            <p class="about__text" data-reveal data-reveal-delay="0.1">
+              I obsess over the boring things that make systems reliable: immutable infrastructure,
+              golden pipelines, blast-radius control, and dashboards that tell the truth. Whether it's
+              a multi-region Kubernetes rollout, a Terraform monorepo, or shaving six figures off a
+              cloud bill, I bring calm, tested engineering to high-stakes systems.
+            </p>
+
+            <ul class="about__facts" data-reveal data-reveal-delay="0.2">
+              <li><span class="mono">→</span> Multi-cloud by default — AWS, GCP &amp; Azure</li>
+              <li><span class="mono">→</span> GitOps, IaC &amp; everything-as-code</li>
+              <li><span class="mono">→</span> On-call empathy: alerts that matter, runbooks that work</li>
+            </ul>
+          </div>
+
+          <!-- Stats -->
+          <div class="about__stats">
+            <!-- CUSTOMIZE: your numbers -->
+            <div class="stat" data-reveal>
+              <div class="stat__num"><span data-count="10" data-suffix="+">0</span></div>
+              <div class="stat__label mono">Years in production</div>
+            </div>
+            <div class="stat" data-reveal data-reveal-delay="0.1">
+              <div class="stat__num"><span data-count="99.99" data-decimals="2" data-suffix="%">0</span></div>
+              <div class="stat__label mono">Uptime delivered</div>
+            </div>
+            <div class="stat" data-reveal data-reveal-delay="0.2">
+              <div class="stat__num"><span data-count="2000" data-suffix="+">0</span></div>
+              <div class="stat__label mono">Deploys automated</div>
+            </div>
+            <div class="stat" data-reveal data-reveal-delay="0.3">
+              <div class="stat__num"><span data-count="40" data-suffix="%">0</span></div>
+              <div class="stat__label mono">Avg. cloud cost cut</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================== STACK =========================== -->
+    <section class="section stack" id="stack">
+      <div class="container">
+        <div class="section__head" data-reveal>
+          <span class="section__idx mono">02 / Stack</span>
+          <span class="section__rule"></span>
+        </div>
+
+        <h2 class="section__title" data-split="words" data-reveal>The tools I reach for.</h2>
+
+        <div class="stack__grid">
+          <!-- CUSTOMIZE: skill groups -->
+          <article class="skill" data-reveal data-tilt>
+            <header class="skill__head">
+              <span class="skill__idx mono">01</span>
+              <h3>Cloud Platforms</h3>
+            </header>
+            <ul class="skill__tags">
+              <li>AWS</li><li>Google Cloud</li><li>Azure</li><li>Cloudflare</li>
+            </ul>
+          </article>
+
+          <article class="skill" data-reveal data-reveal-delay="0.05" data-tilt>
+            <header class="skill__head">
+              <span class="skill__idx mono">02</span>
+              <h3>Containers &amp; Orchestration</h3>
+            </header>
+            <ul class="skill__tags">
+              <li>Docker</li><li>Kubernetes</li><li>Helm</li><li>Istio</li>
+            </ul>
+          </article>
+
+          <article class="skill" data-reveal data-reveal-delay="0.1" data-tilt>
+            <header class="skill__head">
+              <span class="skill__idx mono">03</span>
+              <h3>Infrastructure as Code</h3>
+            </header>
+            <ul class="skill__tags">
+              <li>Terraform</li><li>Pulumi</li><li>Ansible</li><li>CloudFormation</li>
+            </ul>
+          </article>
+
+          <article class="skill" data-reveal data-tilt>
+            <header class="skill__head">
+              <span class="skill__idx mono">04</span>
+              <h3>CI/CD &amp; GitOps</h3>
+            </header>
+            <ul class="skill__tags">
+              <li>GitHub Actions</li><li>GitLab CI</li><li>ArgoCD</li><li>Jenkins</li>
+            </ul>
+          </article>
+
+          <article class="skill" data-reveal data-reveal-delay="0.05" data-tilt>
+            <header class="skill__head">
+              <span class="skill__idx mono">05</span>
+              <h3>Observability</h3>
+            </header>
+            <ul class="skill__tags">
+              <li>Prometheus</li><li>Grafana</li><li>Datadog</li><li>OpenTelemetry</li>
+            </ul>
+          </article>
+
+          <article class="skill" data-reveal data-reveal-delay="0.1" data-tilt>
+            <header class="skill__head">
+              <span class="skill__idx mono">06</span>
+              <h3>Languages &amp; Scripting</h3>
+            </header>
+            <ul class="skill__tags">
+              <li>Python</li><li>Go</li><li>Bash</li><li>TypeScript</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================= EXPERIENCE ========================= -->
+    <section class="section experience" id="experience">
+      <div class="container">
+        <div class="section__head" data-reveal>
+          <span class="section__idx mono">03 / Experience</span>
+          <span class="section__rule"></span>
+        </div>
+
+        <h2 class="section__title" data-split="words" data-reveal>Where I've shipped.</h2>
+
+        <div class="timeline">
+          <!-- CUSTOMIZE: roles -->
+          <article class="tl" data-reveal>
+            <div class="tl__marker"><span></span></div>
+            <div class="tl__meta">
+              <span class="mono tl__date">2022 — Present</span>
+              <h3 class="tl__role">Staff Platform Engineer</h3>
+              <span class="tl__org">Northwind Cloud</span>
+            </div>
+            <div class="tl__desc">
+              <p>Own the internal developer platform serving 300+ engineers. Cut mean deploy time
+                from 40 min to 4 with a GitOps + ArgoCD rollout, and drove a 40% reduction in
+                multi-account AWS spend via automated FinOps guardrails.</p>
+              <ul class="tl__tags"><li>EKS</li><li>ArgoCD</li><li>Terraform</li><li>FinOps</li></ul>
+            </div>
+          </article>
+
+          <article class="tl" data-reveal>
+            <div class="tl__marker"><span></span></div>
+            <div class="tl__meta">
+              <span class="mono tl__date">2019 — 2022</span>
+              <h3 class="tl__role">Senior DevOps Engineer</h3>
+              <span class="tl__org">Helios Fintech</span>
+            </div>
+            <div class="tl__desc">
+              <p>Migrated a monolith to containers across a multi-region Kubernetes footprint with
+                zero-downtime cutovers. Built the observability stack (Prometheus, Grafana, OTel) that
+                took incident MTTR from hours to minutes.</p>
+              <ul class="tl__tags"><li>Kubernetes</li><li>Prometheus</li><li>GitLab CI</li><li>Go</li></ul>
+            </div>
+          </article>
+
+          <article class="tl" data-reveal>
+            <div class="tl__marker"><span></span></div>
+            <div class="tl__meta">
+              <span class="mono tl__date">2016 — 2019</span>
+              <h3 class="tl__role">Cloud Infrastructure Engineer</h3>
+              <span class="tl__org">Vertex Labs</span>
+            </div>
+            <div class="tl__desc">
+              <p>Codified sprawling click-ops infrastructure into Terraform, introduced immutable
+                AMIs and blue/green deploys, and automated on-call runbooks that halved paging noise.</p>
+              <ul class="tl__tags"><li>AWS</li><li>Terraform</li><li>Packer</li><li>Ansible</li></ul>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================== WORK =========================== -->
+    <section class="section work" id="work">
+      <div class="container">
+        <div class="section__head" data-reveal>
+          <span class="section__idx mono">04 / Selected Work</span>
+          <span class="section__rule"></span>
+        </div>
+
+        <h2 class="section__title" data-split="words" data-reveal>Things I've built.</h2>
+
+        <div class="work__grid">
+          <!-- CUSTOMIZE: projects -->
+          <a class="project" href="#" data-reveal data-tilt data-cursor="View">
+            <div class="project__top">
+              <span class="project__idx mono">P.01</span>
+              <span class="project__year mono">2024</span>
+            </div>
+            <h3 class="project__title">Self-service Kubernetes platform</h3>
+            <p class="project__desc">A golden-path internal platform: developers ship to multi-region
+              EKS via a single PR, with policy, secrets and observability wired in by default.</p>
+            <ul class="project__tags"><li>EKS</li><li>Backstage</li><li>ArgoCD</li><li>OPA</li></ul>
+            <span class="project__arrow" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </a>
+
+          <a class="project" href="#" data-reveal data-reveal-delay="0.08" data-tilt data-cursor="View">
+            <div class="project__top">
+              <span class="project__idx mono">P.02</span>
+              <span class="project__year mono">2023</span>
+            </div>
+            <h3 class="project__title">Zero-downtime delivery pipeline</h3>
+            <p class="project__desc">Progressive delivery with automated canaries and instant rollback —
+              1,000+ production deploys a month with a change-fail rate under 2%.</p>
+            <ul class="project__tags"><li>GitHub Actions</li><li>Argo Rollouts</li><li>Go</li></ul>
+            <span class="project__arrow" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </a>
+
+          <a class="project" href="#" data-reveal data-tilt data-cursor="View">
+            <div class="project__top">
+              <span class="project__idx mono">P.03</span>
+              <span class="project__year mono">2023</span>
+            </div>
+            <h3 class="project__title">FinOps cost-control engine</h3>
+            <p class="project__desc">Automated rightsizing, spot orchestration and anomaly alerts that
+              trimmed a seven-figure cloud bill by 40% without touching reliability.</p>
+            <ul class="project__tags"><li>AWS</li><li>Python</li><li>Athena</li><li>Slack API</li></ul>
+            <span class="project__arrow" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </a>
+
+          <a class="project" href="#" data-reveal data-reveal-delay="0.08" data-tilt data-cursor="View">
+            <div class="project__top">
+              <span class="project__idx mono">P.04</span>
+              <span class="project__year mono">2022</span>
+            </div>
+            <h3 class="project__title">Unified observability mesh</h3>
+            <p class="project__desc">One pane of glass across metrics, logs and traces with OpenTelemetry —
+              cut incident MTTR by 70% and killed thousands of noisy alerts.</p>
+            <ul class="project__tags"><li>OpenTelemetry</li><li>Grafana</li><li>Loki</li><li>Tempo</li></ul>
+            <span class="project__arrow" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================== CONTACT ========================= -->
+    <section class="section contact" id="contact">
+      <div class="container">
+        <div class="section__head" data-reveal>
+          <span class="section__idx mono">05 / Contact</span>
+          <span class="section__rule"></span>
+        </div>
+
+        <h2 class="contact__title" data-reveal>
+          Let's build something<br />that <span class="contact__accent">stays up.</span>
+        </h2>
+
+        <!-- CUSTOMIZE: email -->
+        <a href="mailto:hello@alexrivera.dev" class="contact__email" data-magnetic data-cursor="Email">
+          hello@alexrivera.dev
+          <svg viewBox="0 0 24 24" class="btn__arrow"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+
+        <!-- CUSTOMIZE: social links -->
+        <div class="contact__socials" data-reveal data-reveal-delay="0.15">
+          <a href="#" class="social" data-magnetic aria-label="GitHub">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.5 2 2 6.6 2 12.3c0 4.5 2.9 8.4 6.8 9.7.5.1.7-.2.7-.5v-1.7c-2.8.6-3.4-1.4-3.4-1.4-.5-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.6 2.4 1.1 3 .9.1-.7.4-1.1.6-1.4-2.2-.3-4.6-1.1-4.6-5.1 0-1.1.4-2 1-2.7-.1-.3-.4-1.3.1-2.7 0 0 .8-.3 2.7 1a9.3 9.3 0 0 1 5 0c1.9-1.3 2.7-1 2.7-1 .5 1.4.2 2.4.1 2.7.6.7 1 1.6 1 2.7 0 4-2.4 4.8-4.6 5.1.4.3.7.9.7 1.9v2.8c0 .3.2.6.7.5 3.9-1.3 6.8-5.2 6.8-9.7C22 6.6 17.5 2 12 2Z"/></svg>
+          </a>
+          <a href="#" class="social" data-magnetic aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3zM10 9h3.8v1.7h.1c.5-1 1.8-2 3.7-2 4 0 4.7 2.5 4.7 5.9V21h-4v-5.6c0-1.3 0-3-1.9-3s-2.1 1.4-2.1 2.9V21h-4z"/></svg>
+          </a>
+          <a href="#" class="social" data-magnetic aria-label="X / Twitter">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 2H22l-7 8 8.2 12H16l-5-7.3L5.3 22H2l7.5-8.6L1.6 2H9l4.6 6.7L18.9 2Zm-1.1 18h1.7L7.3 4H5.5l12.3 16Z"/></svg>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================== FOOTER ========================== -->
+    <footer class="footer">
+      <div class="container footer__inner">
+        <div class="footer__left">
+          <span class="footer__mark">△</span>
+          <span>Alex Rivera</span>
+        </div>
+        <p class="footer__note mono">
+          Designed &amp; built with HTML · CSS · JS —
+          <span id="year">2026</span>
+        </p>
+        <button class="footer__top" id="backTop" data-magnetic data-cursor="Top">
+          Back to top
+          <svg viewBox="0 0 24 24"><path d="M12 19V5M6 11l6-6 6 6" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </footer>
+
+  </div><!-- /smooth-content -->
+  </div><!-- /smooth-wrapper -->
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
