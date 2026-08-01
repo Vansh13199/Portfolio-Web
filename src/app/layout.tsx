@@ -13,14 +13,14 @@ const jbMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Vansh — Full-Stack Developer",
+  title: "Vansh — Cloud Engineer",
   description:
     "I build real-time cloud systems on AWS. Currently working on Suraksha+, an IoT safety platform, and scalable WebSocket architectures.",
   authors: [{ name: "Vansh", url: "https://github.com/vansh13199" }],
   openGraph: {
-    title: "Vansh — Full-Stack Developer",
+    title: "Vansh — Cloud Engineer",
     description:
-      "Full-stack developer building real-time cloud systems on AWS.",
+      "Cloud Engineer building real-time cloud systems on AWS.",
     type: "website",
   },
 };
