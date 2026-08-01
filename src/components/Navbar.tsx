@@ -1,0 +1,46 @@
+"use client";
+
+import { useState, useEffect } from "react";
+
+export default function Navbar() {
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const fn = () => setScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", fn);
+    return () => window.removeEventListener("scroll", fn);
+  }, []);
+
+  return (
+    <header
+      className={`fixed top-0 left-0 right-0 z-50 transition-[background,border-color] duration-300 ${
+        scrolled
+          ? "bg-[#09090b]/80 backdrop-blur-md border-b border-[#27272a]"
+          : "bg-transparent border-b border-transparent"
+      }`}
+    >
+      <nav className="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between">
+        <a href="#" className="font-mono text-sm text-zinc-400 hover:text-white transition-colors">
+          ~/vansh
+        </a>
+
+        <div className="flex items-center gap-6">
+          {[
+            { label: "Work", href: "#work" },
+            { label: "About", href: "#about" },
+            { label: "Contact", href: "#contact" },
+          ].map((l) => (
+            <a
+              key={l.label}
+              href={l.href}
+              className="text-sm text-zinc-500 hover:text-white transition-colors hidden sm:block"
+            >
+              {l.label}
+            </a>
+          ))}
+
+        </div>
+      </nav>
+    </header>
+  );
+}
