@@ -23,6 +23,9 @@ export const metadata: Metadata = {
       "Cloud Engineer building real-time cloud systems on AWS.",
     type: "website",
   },
+  icons: {
+    icon: "/icon.svg",
+  },
 };
 
 export default function RootLayout({
