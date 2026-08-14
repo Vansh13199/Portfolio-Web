@@ -25,6 +25,20 @@ export default function Navbar() {
         </a>
 
         <div className="flex items-center gap-6">
+          {/* Explore button with animated gradient outline */}
+          <a
+            href="/explore"
+            className="relative hidden sm:inline-flex items-center justify-center group"
+          >
+            {/* Animated gradient border */}
+            <span className="absolute inset-0 rounded-full bg-[conic-gradient(from_var(--gradient-angle),#10b981,#6366f1,#ec4899,#f59e0b,#10b981)] p-[1px] animate-[spin-gradient_3s_linear_infinite]">
+              <span className="flex h-full w-full rounded-full bg-[#09090b] group-hover:bg-zinc-900/80 transition-colors" />
+            </span>
+            <span className="relative z-10 px-4 py-1.5 text-sm text-zinc-300 group-hover:text-white transition-colors">
+              ✦ Explore
+            </span>
+          </a>
+
           {[
             { label: "Work", href: "#work" },
             { label: "About", href: "#about" },
